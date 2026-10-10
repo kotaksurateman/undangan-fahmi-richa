@@ -1,0 +1,14 @@
+(()=> {
+const cfg=window.WEDDING_CONFIG||{}, $=id=>document.getElementById(id);
+const wa=(text)=>`https://wa.me/${(cfg.whatsappNumber||"6281214508218").replace(/\D/g,"")}?text=${encodeURIComponent(text)}`;
+$("whatsappConfirm").addEventListener("click",()=>window.open(wa(`Assalamu'alaikum, saya ingin mengonfirmasi kehadiran untuk pernikahan ${cfg.couple} pada 15 November 2026.\nNama:\nKehadiran:\nJumlah tamu (maks. 2):`),"_blank","noopener"));
+$("whatsappWish").addEventListener("click",()=>window.open(wa(`Assalamu'alaikum ${cfg.couple},\n\nSelamat menempuh hidup baru. Doa dan ucapan saya:\n\nNama:`),"_blank","noopener"));
+const music=$("bgMusic"),musicBtn=$("musicToggle"); musicBtn.addEventListener("click",async()=>{try{if(music.paused){await music.play();musicBtn.innerHTML="♫ <span>JEDA MUSIK</span>"}else{music.pause();musicBtn.innerHTML="♫ <span>PUTAR MUSIK</span>"}}catch(e){alert("Tambahkan file musik ke folder assets/music.mp3 terlebih dahulu.")}});
+const target=new Date(cfg.eventDate||"2026-11-15T00:00:00+07:00").getTime();
+function tick(){let d=Math.max(0,target-Date.now());$("days").textContent=Math.floor(d/86400000);$("hours").textContent=String(Math.floor(d%86400000/3600000)).padStart(2,"0");$("minutes").textContent=String(Math.floor(d%3600000/60000)).padStart(2,"0");$("seconds").textContent=String(Math.floor(d%60000/1000)).padStart(2,"0")}
+tick();setInterval(tick,1000);
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+window.addEventListener("scroll",()=>{const hero=document.querySelector(".hero");if(hero){hero.style.setProperty("--parallax",`${window.scrollY*.12}px`)}},{passive:true});
+$("rsvpForm").addEventListener("submit",async e=>{e.preventDefault();const status=$("formStatus"),fd=new FormData(e.currentTarget),data=Object.fromEntries(fd.entries());data.jumlah=Number(data.jumlah);if(data.jumlah>Number(cfg.maxGuestsPerSubmission||2)){status.textContent="Maksimal 2 orang per pendaftaran.";return}if(!cfg.appsScriptUrl){status.textContent="RSVP online belum aktif. Gunakan tombol konfirmasi via WhatsApp atau selesaikan pemasangan Apps Script.";return}
+status.textContent="Mengirim konfirmasi…";try{const resp=await fetch(cfg.appsScriptUrl,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});const result=await resp.json();if(!result.ok)throw new Error(result.message||"Gagal menyimpan RSVP");status.textContent=result.message||"RSVP berhasil disimpan. Terima kasih!";e.currentTarget.reset()}catch(err){status.textContent="RSVP belum berhasil terkirim. Silakan gunakan konfirmasi via WhatsApp. ("+err.message+")"}});
+})();
