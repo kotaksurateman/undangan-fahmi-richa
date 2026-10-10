@@ -9,6 +9,37 @@ function tick(){let d=Math.max(0,target-Date.now());$("days").textContent=Math.f
 tick();setInterval(tick,1000);
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 window.addEventListener("scroll",()=>{const hero=document.querySelector(".hero");if(hero){hero.style.setProperty("--parallax",`${window.scrollY*.12}px`)}},{passive:true});
-$("rsvpForm").addEventListener("submit",async e=>{e.preventDefault();const status=$("formStatus"),fd=new FormData(e.currentTarget),data=Object.fromEntries(fd.entries());data.jumlah=Number(data.jumlah);if(data.jumlah>Number(cfg.maxGuestsPerSubmission||2)){status.textContent="Maksimal 2 orang per pendaftaran.";return}if(!cfg.appsScriptUrl){status.textContent="RSVP online belum aktif. Gunakan tombol konfirmasi via WhatsApp atau selesaikan pemasangan Apps Script.";return}
-status.textContent="Mengirim konfirmasi…";try{const resp=await fetch(cfg.appsScriptUrl,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});const result=await resp.json();if(!result.ok)throw new Error(result.message||"Gagal menyimpan RSVP");status.textContent=result.message||"RSVP berhasil disimpan. Terima kasih!";e.currentTarget.reset()}catch(err){status.textContent="RSVP belum berhasil terkirim. Silakan gunakan konfirmasi via WhatsApp. ("+err.message+")"}});
+const rsvpForm = $("rsvpForm");
+rsvpForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.currentTarget; // Simpan referensi sebelum await.
+  const status = $("formStatus");
+  const fd = new FormData(form);
+  const data = Object.fromEntries(fd.entries());
+  data.jumlah = Number(data.jumlah);
+
+  if (data.jumlah > Number(cfg.maxGuestsPerSubmission || 2)) {
+    status.textContent = "Maksimal 2 orang per pendaftaran.";
+    return;
+  }
+  if (!cfg.appsScriptUrl) {
+    status.textContent = "RSVP online belum aktif. Gunakan konfirmasi via WhatsApp atau selesaikan pemasangan Apps Script.";
+    return;
+  }
+
+  status.textContent = "Mengirim konfirmasi…";
+  try {
+    const resp = await fetch(cfg.appsScriptUrl, {
+      method: "POST",
+      headers: {"Content-Type": "text/plain;charset=utf-8"},
+      body: JSON.stringify(data)
+    });
+    const result = await resp.json();
+    if (!resp.ok || !result.ok) throw new Error(result.message || "Gagal menyimpan RSVP");
+    status.textContent = result.message || "RSVP berhasil disimpan. Terima kasih!";
+    form.reset();
+  } catch (err) {
+    status.textContent = "RSVP belum dapat dipastikan tersimpan. Periksa tab RSVP di spreadsheet sebelum mencoba lagi untuk menghindari data ganda. Detail: " + err.message;
+  }
+});
 })();
