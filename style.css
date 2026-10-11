@@ -6,7 +6,7 @@
 .parents-names{font:500 21px/1.45 "Cormorant Garamond",serif;color:#e6ddca;margin:0}
 .gift-accounts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:850px;margin:35px auto 0}
 .gift-accounts .gift-box{width:100%;margin:0;padding:28px 20px}
-.gift-box .account-number{font:600 22px "DM Sans",sans-serif;letter-spacing:1px;color:#e2c477;margin:15px 0 5px}
+.gift-box .account-number{font:600 17px "DM Sans",sans-serif;letter-spacing:1px;color:#e2c477;margin:15px 0 5px}
 .gift-box .account-owner{font-size:12px;color:#c6bdac;margin:0 0 18px}
 .copy-account{font-size:9px;padding:11px 13px}
 @media(max-width:600px){.parents-grid,.gift-accounts{grid-template-columns:1fr}.parents-names{font-size:20px}.gift-accounts .gift-box{padding:25px 18px}}
