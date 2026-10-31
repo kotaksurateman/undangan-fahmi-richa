@@ -183,6 +183,8 @@ body.wishes-modal-open{overflow:hidden}
     if(rsvpName&&!rsvpName.value.trim())rsvpName.value=name;
     const rsvpWish=document.getElementById('rsvpWishHidden');
     if(rsvpWish)rsvpWish.value=wish;
+    // Penanda khusus: animasi hanya boleh muncul bila pengunjung memang mengisi ucapan.
+    window.__wishPendingForSpark=true;
     status.textContent='Ucapan sudah diisi. Silakan kirim RSVP agar ucapan tersimpan.';
     hide();
     const formStatus=document.getElementById('formStatus');
@@ -259,7 +261,13 @@ body.wishes-modal-open{overflow:hidden}
   const observer=new MutationObserver(()=>{
     const message=(status.textContent||'').trim().toLowerCase();
     const success=/(berhasil|terkirim|berhasil disimpan|rsvp tersimpan|terima kasih)/i.test(message);
-    if(success&&!shownForThisSuccess){shownForThisSuccess=true;celebrate();}
+    const wishWasPrepared=window.__wishPendingForSpark===true;
+    // RSVP kehadiran biasa tidak memunculkan animasi. Harus ada ucapan yang disiapkan.
+    if(success&&wishWasPrepared&&!shownForThisSuccess){
+      shownForThisSuccess=true;
+      window.__wishPendingForSpark=false;
+      celebrate();
+    }
     if(!success)shownForThisSuccess=false;
   });
   observer.observe(status,{childList:true,subtree:true,characterData:true});
