@@ -58,6 +58,11 @@
   <div class="event-card">
     <div class="event-icon">✦</div><p class="eyebrow">HARI PERNIKAHAN</p><h3>Fahmi & Richa</h3>
     <p class="event-date">Minggu, 15 November 2026</p>
+    <div class="event-divider"></div>
+    <div class="event-schedule">
+      <div class="schedule-item"><span class="eyebrow gold">AKAD NIKAH</span><strong>10.00 WIB</strong></div>
+      <div class="schedule-item"><span class="eyebrow gold">RESEPSI</span><strong>11.00–13.30 WIB</strong></div>
+    </div>
     <div class="event-divider"></div><p class="venue">De'Jati Coffee Garden</p><p class="muted">Bogor, Jawa Barat</p>
     <p class="placeholder-note"></p>
     <a class="outline-button" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=De%27Jati+Coffee+Garden+Bogor">LIHAT PETA ↗</a>
@@ -69,12 +74,8 @@
 </section>
 <section class="gift section reveal">
   <p class="eyebrow gold">A TOKEN OF LOVE</p><h2>Hadiah Pernikahan</h2><div class="ornament"><i></i> ✦ <i></i></div>
-  <p class="body-copy">Doa dan kehadiran Anda adalah hadiah terindah bagi kami. Terima kasih telah menjadi bagian dari kebahagiaan kami.</p>
-  <div class="gift-accounts">
-    <div class="gift-box"><span class="gift-icon">◇</span><h3>Bank BCA</h3><p class="account-number">6820536841</p><p class="account-owner">a.n. Dzul Fahmi Sulaeman</p><button class="outline-button copy-account" type="button" data-account="6820536841">SALIN NOMOR REKENING</button></div>
-    <div class="gift-box"><span class="gift-icon">◇</span><h3>Bank BCA</h3><p class="account-number">5466027568</p><p class="account-owner">a.n. Richa Wahyu Aprillia</p><button class="outline-button copy-account" type="button" data-account="5466027568">SALIN NOMOR REKENING</button></div>
-  </div>
-  <p id="copyStatus" class="tiny muted" role="status" aria-live="polite"></p>
+  <p class="body-copy">Doa dan kehadiran Anda adalah hadiah terindah bagi kami. Jika berkenan, tinggalkan pesan dan doa untuk perjalanan baru kami.</p>
+  <button class="gold-button" type="button" id="openWishesModal">KIRIM UCAPAN &amp; DOA ✦</button>
 </section>
 <section id="rsvp" class="rsvp section reveal">
   <p class="eyebrow gold">KINDLY REPLY</p><h2>Konfirmasi Kehadiran</h2><p class="body-copy">Mohon isi konfirmasi kehadiran.</p>
@@ -82,23 +83,187 @@
     <label>Nama lengkap<input name="nama" required maxlength="100" placeholder="Nama Anda"></label>
     <label>Konfirmasi kehadiran<select name="kehadiran" required><option value="">Pilih jawaban</option><option value="Hadir">Dengan senang hati hadir</option><option value="Tidak Hadir">Mohon maaf, belum bisa hadir</option></select></label>
     <label>Jumlah tamu<select name="jumlah" required><option value="1">1 orang</option><option value="2">2 orang</option></select></label>
-    <label>Ucapan & doa<textarea name="ucapan" rows="3" maxlength="500" placeholder="Tuliskan doa terbaik untuk kami (opsional)"></textarea></label>
+    <input type="hidden" name="ucapan" id="rsvpWishHidden" value="">
     <button class="gold-button full" type="submit">KIRIM RSVP</button>
     <p id="formStatus" class="form-status" role="status"></p>
   </form>
   <div class="rsvp-actions"><button id="whatsappConfirm" class="outline-button">KONFIRMASI VIA WHATSAPP ↗</button><button id="whatsappWish" class="outline-button">KIRIM UCAPAN VIA WHATSAPP ↗</button></div>
   <p class="tiny muted"></p>
 </section>
+<div id="wishesModal" class="wishes-modal" hidden aria-hidden="true">
+  <div class="wishes-modal-backdrop" data-close-wishes></div>
+  <div class="wishes-modal-panel" role="dialog" aria-modal="true" aria-labelledby="wishesModalTitle">
+    <button type="button" class="wishes-modal-close" id="closeWishesModal" aria-label="Tutup">×</button>
+    <p class="eyebrow gold">A MESSAGE FROM THE HEART</p>
+    <h2 id="wishesModalTitle">Ucapan &amp; Doa</h2>
+    <p class="body-copy">Doa dan ucapan dari keluarga serta sahabat yang telah mengisi buku tamu. Jika berkenan memberikan tanda kasih, informasi rekening tersedia di bawah ini.</p>
+    <div class="popup-gift-accounts">
+      <div class="gift-box"><span class="gift-icon">◇</span><h3>Bank BCA</h3><p class="account-number">6820536841</p><p class="account-owner">a.n. Dzul Fahmi Sulaeman</p><button class="outline-button popup-copy-account" type="button" data-account="6820536841">SALIN NOMOR REKENING</button></div>
+      <div class="gift-box"><span class="gift-icon">◇</span><h3>Bank BCA</h3><p class="account-number">5466027568</p><p class="account-owner">a.n. Richa Wahyu Aprillia</p><button class="outline-button popup-copy-account" type="button" data-account="5466027568">SALIN NOMOR REKENING</button></div>
+    </div>
+    <p id="popupCopyStatus" class="tiny muted" role="status" aria-live="polite"></p>
+    <div class="wishes-divider"></div>
+    <p class="eyebrow gold">LEAVE YOUR WISHES</p>
+    <label class="wishes-input-label">Nama pengirim<input id="wishSender" type="text" maxlength="100" placeholder="Nama Anda"></label>
+    <label class="wishes-input-label">Ucapan &amp; doa<textarea id="wishMessage" rows="4" maxlength="500" placeholder="Tuliskan ucapan dan doa terbaik..."></textarea></label>
+    <button type="button" class="gold-button full" id="submitWish">SIMPAN UCAPAN</button>
+    <p id="wishSubmitStatus" class="form-status" role="status" aria-live="polite"></p>
+  </div>
+</div>
 <section class="closing parallax-panel"><p class="script">With love and gratitude</p><h2>Merupakan kebahagiaan bagi kami<br>apabila Anda hadir.</h2><div class="ornament"><i></i> ✦ <i></i></div><p class="date">DZULFAHMI SULAEMAN & RICHA WAHYU APRILLIA</p><p class="eyebrow gold">15 · 11 · 2026</p></section>
 </main>
-<section id="guest-wishes" class="guest-wishes section reveal">
+
+<section id="guest-wishes" class="guest-wishes-footer section">
   <p class="eyebrow gold">WARM WORDS FROM YOU</p>
-  <h2>Ucapan & Doa</h2>
-  <p class="body-copy">Doa dan ucapan dari keluarga serta sahabat yang telah mengisi buku tamu.</p>
+  <h2>Ucapan &amp; Doa</h2>
+  <div class="ornament"><i></i> ✦ <i></i></div>
   <div id="wishesList" class="wishes-list" aria-live="polite"><p class="muted">Memuat ucapan…</p></div>
   <p id="wishesStatus" class="tiny muted" role="status"></p>
 </section>
 <footer><a class="brand" href="#home">F <span>/</span> R</a><p>MADE WITH LOVE · 2026</p><a href="#home">KEMBALI KE ATAS ↑</a></footer>
 <audio id="bgMusic" loop preload="none" src="assets/music.mp3"></audio>
 <script src="config.js"></script><script src="script.js"></script>
+
+<style>
+.event-schedule{display:flex;justify-content:center;gap:clamp(24px,6vw,64px);margin:24px 0;text-align:center;flex-wrap:wrap}
+.schedule-item{display:flex;flex-direction:column;gap:7px}
+.schedule-item strong{font-family:"Cormorant Garamond",serif;font-size:1.55rem;color:#d6bd7a;font-weight:600}
+.wishes-modal[hidden]{display:none!important}
+.wishes-modal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:18px}
+.wishes-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(5px)}
+.wishes-modal-panel{position:relative;z-index:1;width:min(100%,620px);max-height:min(88vh,900px);overflow:auto;background:#171612;color:#eee8d9;border:1px solid rgba(201,162,39,.55);padding:clamp(24px,5vw,42px);box-shadow:0 20px 80px rgba(0,0,0,.5)}
+.wishes-modal-close{position:absolute;right:15px;top:10px;background:none;border:0;color:#d6bd7a;font-size:30px;cursor:pointer}
+.wishes-modal-panel h2{margin:8px 0 12px}
+.wishes-input-label{display:block;text-align:left;margin:18px 0;color:#d6bd7a;font-size:.85rem;letter-spacing:.06em}
+.wishes-input-label input,.wishes-input-label textarea{display:block;width:100%;box-sizing:border-box;margin-top:8px;padding:13px 14px;background:#211f19;color:#f7f0df;border:1px solid rgba(201,162,39,.35);font:inherit;letter-spacing:normal}
+.popup-gift-accounts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
+.popup-gift-accounts .gift-box{padding:18px 14px;border:1px solid rgba(201,162,39,.35);text-align:center;background:rgba(255,255,255,.025)}
+.popup-gift-accounts .account-number{font-size:1.15rem;letter-spacing:.06em;color:#f3e6c2}
+.popup-gift-accounts .account-owner{font-size:.85rem;color:#c8c0ad}
+.popup-gift-accounts .outline-button{font-size:.7rem;padding:10px 12px}
+@media(max-width:520px){.popup-gift-accounts{grid-template-columns:1fr}}
+.wishes-divider{height:1px;background:rgba(201,162,39,.3);margin:28px 0}
+.guest-wishes{padding:0;margin:0}
+.guest-wishes h3{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:500}
+body.wishes-modal-open{overflow:hidden}
+</style>
+<script>
+(function(){
+  const modal=document.getElementById('wishesModal');
+  const open=document.getElementById('openWishesModal');
+  const close=document.getElementById('closeWishesModal');
+  if(!modal||!open||!close)return;
+  function show(){modal.hidden=false;modal.setAttribute('aria-hidden','false');document.body.classList.add('wishes-modal-open');close.focus();}
+  function hide(){modal.hidden=true;modal.setAttribute('aria-hidden','true');document.body.classList.remove('wishes-modal-open');open.focus();}
+  open.addEventListener('click',show);
+  close.addEventListener('click',hide);
+  modal.querySelectorAll('[data-close-wishes]').forEach(el=>el.addEventListener('click',hide));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)hide();});
+  const sender=document.getElementById('wishSender');
+  const message=document.getElementById('wishMessage');
+  const status=document.getElementById('wishSubmitStatus');
+  const submit=document.getElementById('submitWish');
+  modal.querySelectorAll('.popup-copy-account').forEach(button=>{
+    button.addEventListener('click',async()=>{
+      const account=button.getAttribute('data-account')||'';
+      const copyStatus=document.getElementById('popupCopyStatus');
+      try{
+        await navigator.clipboard.writeText(account);
+        copyStatus.textContent='Nomor rekening berhasil disalin.';
+      }catch(e){
+        copyStatus.textContent='Tidak dapat menyalin otomatis. Silakan salin nomor rekening secara manual: '+account;
+      }
+    });
+  });
+  submit.addEventListener('click',()=>{
+    const name=(sender.value||'').trim();
+    const wish=(message.value||'').trim();
+    if(!name||!wish){status.textContent='Mohon isi nama dan ucapan terlebih dahulu.';return;}
+    const rsvpName=document.querySelector('#rsvpForm [name="nama"]');
+    if(rsvpName&&!rsvpName.value.trim())rsvpName.value=name;
+    const rsvpWish=document.getElementById('rsvpWishHidden');
+    if(rsvpWish)rsvpWish.value=wish;
+    status.textContent='Ucapan sudah diisi. Silakan kirim RSVP agar ucapan tersimpan.';
+    hide();
+    const formStatus=document.getElementById('formStatus');
+    if(formStatus)formStatus.textContent='Ucapan sudah disiapkan. Lengkapi konfirmasi kehadiran dan kirim RSVP.';
+    document.getElementById('rsvp')?.scrollIntoView({behavior:'smooth'});
+  });
+})();
+</script>
+\n
+<style>
+.love-spark-overlay{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;background:rgba(9,8,7,.68);backdrop-filter:blur(7px);opacity:0;visibility:hidden;transition:opacity .55s ease,visibility .55s ease;padding:20px}
+.love-spark-overlay.is-active{opacity:1;visibility:visible}
+.love-spark-card{position:relative;text-align:center;width:min(100%,370px);padding:40px 30px 32px;background:linear-gradient(155deg,#211e18 0%,#12110f 100%);border:1px solid rgba(214,189,122,.48);box-shadow:0 22px 80px rgba(0,0,0,.48);overflow:hidden}
+.love-spark-card:before,.love-spark-card:after{content:"";position:absolute;left:18%;right:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(221,194,130,.8),transparent);animation:elegantGlow 3.2s ease-in-out infinite}
+.love-spark-card:before{top:18px}.love-spark-card:after{bottom:18px;animation-delay:1.6s}
+.love-spark-heart{font-family:Georgia,serif;font-size:43px;line-height:1;color:#d9c18a;text-shadow:0 0 18px rgba(216,185,103,.2);animation:softHeart 1.4s ease both}
+.love-spark-title{font-family:"Cormorant Garamond",serif;font-size:2.05rem;font-weight:500;letter-spacing:.025em;color:#e6d3a6;margin:18px 0 8px}
+.love-spark-copy{font-size:.9rem;line-height:1.85;color:#e9e1d0}
+.love-spark-particle{position:absolute;left:50%;top:43%;font-size:11px;color:#e6cf91;pointer-events:none;animation:quietSpark 2.4s ease-out forwards;--sx:0px;--sy:0px}
+.love-spark-close{margin-top:24px;background:transparent;border:1px solid rgba(214,189,122,.5);color:#e6cf91;padding:10px 27px;letter-spacing:.16em;font:inherit;font-size:.72rem;cursor:pointer;transition:background .25s ease,border-color .25s ease}
+.love-spark-close:hover{background:rgba(214,189,122,.08);border-color:rgba(214,189,122,.9)}
+@keyframes softHeart{0%{transform:scale(.88);opacity:0}55%{opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes elegantGlow{0%,100%{opacity:.25;transform:scaleX(.72)}50%{opacity:.9;transform:scaleX(1)}}
+@keyframes quietSpark{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}18%{opacity:.75}100%{transform:translate(calc(-50% + var(--sx)),calc(-50% + var(--sy))) scale(.2);opacity:0}}
+.guest-wishes-footer{text-align:center;background:rgba(15,14,12,.96);padding:clamp(42px,7vw,76px) 20px;border-top:1px solid rgba(201,162,39,.22)}
+.guest-wishes-footer h2{font-family:"Cormorant Garamond",serif;font-weight:500}
+.guest-wishes-footer .wishes-list{width:min(100%,760px);margin:28px auto 0;text-align:left;display:grid;gap:12px}
+.guest-wishes-footer .wishes-list>*{padding:16px 19px;background:rgba(255,255,255,.025);border:1px solid rgba(201,162,39,.2)}
+@media(prefers-reduced-motion:reduce){.love-spark-heart,.love-spark-particle,.love-spark-card:before,.love-spark-card:after{animation:none!important}.love-spark-overlay{transition:none}}
+</style>
+
+<div id="loveSparkOverlay" class="love-spark-overlay" aria-hidden="true">
+  <div class="love-spark-card" role="dialog" aria-modal="true" aria-labelledby="loveSparkTitle">
+    <div class="love-spark-heart" aria-hidden="true">♥</div>
+    <h2 id="loveSparkTitle" class="love-spark-title">Pesan Terkirim</h2>
+    <p class="love-spark-copy">Terima kasih atas ucapan dan doa baiknya.<br>Dengan penuh cinta, Fahmi &amp; Richa.</p>
+    <button type="button" class="love-spark-close" id="closeLoveSpark">TUTUP</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const overlay=document.getElementById('loveSparkOverlay');
+  const close=document.getElementById('closeLoveSpark');
+  const status=document.getElementById('formStatus');
+  if(!overlay||!status||!close)return;
+  let shownForThisSuccess=false;
+  function celebrate(){
+    if(overlay.classList.contains('is-active'))return;
+    overlay.classList.add('is-active');
+    overlay.setAttribute('aria-hidden','false');
+    const card=overlay.querySelector('.love-spark-card');
+    card.querySelectorAll('.love-spark-particle').forEach(el=>el.remove());
+    const symbols=['✧','·','✦','·'];
+    symbols.forEach((symbol,i)=>{
+      const particle=document.createElement('span');
+      particle.className='love-spark-particle';
+      particle.textContent=symbol;
+      const angle=(Math.PI*2*i)/symbols.length;
+      particle.style.setProperty('--sx',(Math.cos(angle)*72)+'px');
+      particle.style.setProperty('--sy',(Math.sin(angle)*62)+'px');
+      particle.style.animationDelay=(i*.16)+'s';
+      card.appendChild(particle);
+    });
+    close.focus();
+  }
+  function dismiss(){
+    overlay.classList.remove('is-active');
+    overlay.setAttribute('aria-hidden','true');
+  }
+  close.addEventListener('click',dismiss);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)dismiss();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')dismiss();});
+  const observer=new MutationObserver(()=>{
+    const message=(status.textContent||'').trim().toLowerCase();
+    const success=/(berhasil|terkirim|berhasil disimpan|rsvp tersimpan|terima kasih)/i.test(message);
+    if(success&&!shownForThisSuccess){shownForThisSuccess=true;celebrate();}
+    if(!success)shownForThisSuccess=false;
+  });
+  observer.observe(status,{childList:true,subtree:true,characterData:true});
+})();
+</script>
+
 </body></html>
