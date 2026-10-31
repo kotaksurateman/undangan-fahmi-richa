@@ -24,7 +24,7 @@
 .gallery-tile span{z-index:2;text-shadow:0 1px 8px #000}
 @media(max-width:700px){.story-image,.story-image img{min-height:350px;height:350px}.gallery-tile{height:180px}}
 
-/* Revisi khusus: pertahankan jarak Fahmi ke &, tarik Richa lebih dekat */
+/* Revisi khusus: pertahankan jarak Fahmi ke &, dekatkan Richa secara signifikan */
 .hero h1 em {
-  margin: 14px 0 -22px;
+  margin: 14px 0 -58px;
 }
