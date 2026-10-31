@@ -24,7 +24,10 @@
 .gallery-tile span{z-index:2;text-shadow:0 1px 8px #000}
 @media(max-width:700px){.story-image,.story-image img{min-height:350px;height:350px}.gallery-tile{height:180px}}
 
-/* Revisi khusus: pertahankan jarak Fahmi ke &, dekatkan Richa secara signifikan */
+
+/* FIX FINAL: hanya rapatkan ruang setelah simbol &, jarak Fahmi-& tetap */
 .hero h1 em {
-  margin: 14px 0 -58px;
+  display: block !important;
+  margin-top: 14px !important;
+  margin-bottom: -118px !important;
 }
