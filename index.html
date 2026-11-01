@@ -121,35 +121,76 @@
 </section>
 <footer><a class="brand" href="#home">F <span>/</span> R</a><p>MADE WITH LOVE · 2026</p><a href="#home">KEMBALI KE ATAS ↑</a></footer>
 <audio id="bgMusic" autoplay loop preload="auto" playsinline src="assets/music.mp3"></audio>
+<script src="config.js"></script><script src="script.js"></script>
+
 <script>
-/* Musik otomatis: coba saat halaman dibuka, lalu lanjutkan pada interaksi pertama jika diblokir browser. */
-(function(){
+/* Musik langsung diputar; tombol header berfungsi sebagai kontrol matikan/nyalakan musik. */
+(function () {
   const music = document.getElementById('bgMusic');
-  if (!music) return;
+  let button = document.getElementById('musicToggle');
+  if (!music || !button) return;
+
+  // Ganti elemen tombol untuk membersihkan listener lama dari script.js.
+  const cleanButton = button.cloneNode(true);
+  button.replaceWith(cleanButton);
+  button = cleanButton;
+
   music.volume = 0.65;
-  const startMusic = () => {
-    if (!music.paused) return;
-    const playAttempt = music.play();
-    if (playAttempt && typeof playAttempt.catch === 'function') {
-      playAttempt.catch(() => {
-        // Browser memblokir autoplay bersuara; akan dicoba lagi pada interaksi pengguna pertama.
-      });
-    }
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startMusic, { once: true });
-  } else {
-    startMusic();
+  music.loop = true;
+  music.autoplay = true;
+
+  function updateButton() {
+    const playing = !music.paused && !music.ended;
+    button.innerHTML = playing ? '♫ <span>MATIKAN MUSIK</span>' : '♫ <span>NYALAKAN MUSIK</span>';
+    button.setAttribute('aria-label', playing ? 'Matikan musik' : 'Nyalakan musik');
+    button.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    button.title = playing ? 'Matikan musik' : 'Nyalakan musik';
   }
-  ['pointerdown','touchstart','click','keydown'].forEach(eventName => {
-    document.addEventListener(eventName, startMusic, { once: true, passive: true });
+
+  function tryPlay() {
+    if (!music.paused) {
+      updateButton();
+      return;
+    }
+    const attempt = music.play();
+    if (attempt && typeof attempt.then === 'function') {
+      attempt.then(updateButton).catch(updateButton);
+    } else {
+      updateButton();
+    }
+  }
+
+  // Coba putar segera saat halaman dimuat.
+  tryPlay();
+
+  // Jika autoplay bersuara diblokir browser, mulai pada interaksi pertama di luar tombol musik.
+  function firstUserInteraction(event) {
+    if (event.target && (event.target === button || button.contains(event.target))) return;
+    tryPlay();
+    ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(type => {
+      document.removeEventListener(type, firstUserInteraction, true);
+    });
+  }
+  ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(type => {
+    document.addEventListener(type, firstUserInteraction, true);
   });
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && music.paused) startMusic();
+
+  button.addEventListener('click', function () {
+    if (!music.paused && !music.ended) {
+      music.pause();
+      updateButton();
+    } else {
+      tryPlay();
+    }
   });
+
+  music.addEventListener('play', updateButton);
+  music.addEventListener('pause', updateButton);
+  music.addEventListener('ended', updateButton);
+  updateButton();
 })();
 </script>
-<script src="config.js"></script><script src="script.js"></script>
+
 
 <style>
 .event-schedule{display:flex;justify-content:center;gap:clamp(24px,6vw,64px);margin:24px 0;text-align:center;flex-wrap:wrap}
