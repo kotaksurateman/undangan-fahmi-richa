@@ -13,7 +13,6 @@
 <div class="grain"></div>
 <nav class="nav">
   <a class="brand" href="#home">F <span>/</span> R</a>
-  <div class="navlinks"><a href="#story">CERITA</a><a href="#event">ACARA</a><a href="#gallery">GALERI</a><a href="#rsvp">RSVP</a></div>
   <button id="musicToggle" class="music-btn" aria-label="Putar atau jeda musik">♫ <span>PUTAR MUSIK</span></button>
 </nav>
 <header id="home" class="hero parallax">
@@ -121,7 +120,35 @@
   <p id="wishesStatus" class="tiny muted" role="status"></p>
 </section>
 <footer><a class="brand" href="#home">F <span>/</span> R</a><p>MADE WITH LOVE · 2026</p><a href="#home">KEMBALI KE ATAS ↑</a></footer>
-<audio id="bgMusic" loop preload="none" src="assets/music.mp3"></audio>
+<audio id="bgMusic" autoplay loop preload="auto" playsinline src="assets/music.mp3"></audio>
+<script>
+/* Musik otomatis: coba saat halaman dibuka, lalu lanjutkan pada interaksi pertama jika diblokir browser. */
+(function(){
+  const music = document.getElementById('bgMusic');
+  if (!music) return;
+  music.volume = 0.65;
+  const startMusic = () => {
+    if (!music.paused) return;
+    const playAttempt = music.play();
+    if (playAttempt && typeof playAttempt.catch === 'function') {
+      playAttempt.catch(() => {
+        // Browser memblokir autoplay bersuara; akan dicoba lagi pada interaksi pengguna pertama.
+      });
+    }
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startMusic, { once: true });
+  } else {
+    startMusic();
+  }
+  ['pointerdown','touchstart','click','keydown'].forEach(eventName => {
+    document.addEventListener(eventName, startMusic, { once: true, passive: true });
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && music.paused) startMusic();
+  });
+})();
+</script>
 <script src="config.js"></script><script src="script.js"></script>
 
 <style>
