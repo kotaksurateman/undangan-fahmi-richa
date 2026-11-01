@@ -31,3 +31,13 @@
   margin-top: 14px !important;
   margin-bottom: -118px !important;
 }
+
+
+/* FIX MOBILE: pulihkan jarak simbol & agar tidak menimpa nama Richa */
+@media (max-width: 700px) {
+  .hero h1 em {
+    margin-top: 14px !important;
+    margin-bottom: 18px !important;
+    line-height: 1 !important;
+  }
+}
