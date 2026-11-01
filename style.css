@@ -32,12 +32,25 @@
   margin-bottom: -118px !important;
 }
 
+/* FIX MOBILE FINAL: hilangkan BR ganda agar urutan Fahmi – & – Richa benar */
+@media (max-width: 700px) {
+  .hero h1 br {
+    display: none !important;
+  }
+  .hero h1 em {
+    display: block !important;
+    margin: 8px 0 8px !important;
+    line-height: .85 !important;
+  }
+}
 
-/* FIX MOBILE: pulihkan jarak simbol & agar tidak menimpa nama Richa */
+
+/* MOBILE SPACING TUNE: dekatkan Richa ke simbol &, tanpa mengubah jarak Fahmi-& */
 @media (max-width: 700px) {
   .hero h1 em {
-    margin-top: 14px !important;
-    margin-bottom: 18px !important;
-    line-height: 1 !important;
+    display: block !important;
+    margin-top: 8px !important;
+    margin-bottom: -52px !important;
+    line-height: .85 !important;
   }
 }
