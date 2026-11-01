@@ -24,33 +24,7 @@
 .gallery-tile span{z-index:2;text-shadow:0 1px 8px #000}
 @media(max-width:700px){.story-image,.story-image img{min-height:350px;height:350px}.gallery-tile{height:180px}}
 
-
-/* FIX FINAL: hanya rapatkan ruang setelah simbol &, jarak Fahmi-& tetap */
+/* Revisi khusus: pertahankan jarak Fahmi ke &, dekatkan Richa secara signifikan */
 .hero h1 em {
-  display: block !important;
-  margin-top: 14px !important;
-  margin-bottom: -118px !important;
-}
-
-/* FIX MOBILE FINAL: hilangkan BR ganda agar urutan Fahmi – & – Richa benar */
-@media (max-width: 700px) {
-  .hero h1 br {
-    display: none !important;
-  }
-  .hero h1 em {
-    display: block !important;
-    margin: 8px 0 8px !important;
-    line-height: .85 !important;
-  }
-}
-
-
-/* MOBILE SPACING TUNE: dekatkan Richa ke simbol &, tanpa mengubah jarak Fahmi-& */
-@media (max-width: 700px) {
-  .hero h1 em {
-    display: block !important;
-    margin-top: 8px !important;
-    margin-bottom: -52px !important;
-    line-height: .85 !important;
-  }
+  margin: 14px 0 -58px;
 }
