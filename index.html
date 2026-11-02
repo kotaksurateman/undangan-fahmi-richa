@@ -74,7 +74,10 @@
 <section class="gift section reveal">
   <p class="eyebrow gold">A TOKEN OF LOVE</p><h2>Hadiah Pernikahan</h2><div class="ornament"><i></i> ✦ <i></i></div>
   <p class="body-copy">Doa dan kehadiran Anda adalah hadiah terindah bagi kami. Jika berkenan, tinggalkan pesan dan doa untuk perjalanan baru kami.</p>
-  <button class="gold-button" type="button" id="openWishesModal">KIRIM UCAPAN &amp; DOA ✦</button>
+  <button class="gold-button sparkle-button" type="button" id="openWishesModal">
+    <span class="sparkle-button-label">KIRIM UCAPAN &amp; DOA ✦</span>
+    <span class="sparkle-particles" aria-hidden="true"><i>✦</i><i>✧</i><i>·</i><i>✦</i><i>✧</i><i>·</i></span>
+  </button>
 </section>
 <section id="rsvp" class="rsvp section reveal">
   <p class="eyebrow gold">KINDLY REPLY</p><h2>Konfirmasi Kehadiran</h2><p class="body-copy">Mohon isi konfirmasi kehadiran.</p>
@@ -214,6 +217,24 @@
 .guest-wishes{padding:0;margin:0}
 .guest-wishes h3{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:500}
 body.wishes-modal-open{overflow:hidden}
+
+/* Elegant flying sparkles khusus tombol Kirim Ucapan & Doa */
+.sparkle-button{position:relative;isolation:isolate;overflow:visible;z-index:1;box-shadow:0 0 0 rgba(218,190,124,0)}
+.sparkle-button::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 42%,rgba(255,246,211,.48) 50%,transparent 58%);background-size:250% 100%;background-position:100% 0;animation:buttonGoldShimmer 4.2s ease-in-out infinite}
+.sparkle-button-label{position:relative;z-index:2}
+.sparkle-particles{position:absolute;inset:-24px -20px;z-index:3;pointer-events:none;overflow:visible}
+.sparkle-particles i{position:absolute;display:block;font-style:normal;font-size:10px;color:#f5df9e;opacity:0;text-shadow:0 0 7px rgba(255,225,151,.9),0 0 14px rgba(218,184,105,.55);animation:flyingGoldSpark 3.8s ease-in-out infinite}
+.sparkle-particles i:nth-child(1){left:8%;top:68%;--fly-x:13px;--fly-y:-28px;animation-delay:.1s}
+.sparkle-particles i:nth-child(2){left:27%;top:8%;--fly-x:-12px;--fly-y:-24px;animation-delay:1.2s;font-size:8px}
+.sparkle-particles i:nth-child(3){left:49%;top:88%;--fly-x:4px;--fly-y:-32px;animation-delay:2s}
+.sparkle-particles i:nth-child(4){left:72%;top:20%;--fly-x:16px;--fly-y:-25px;animation-delay:.7s;font-size:9px}
+.sparkle-particles i:nth-child(5){left:91%;top:72%;--fly-x:-13px;--fly-y:-31px;animation-delay:2.5s}
+.sparkle-particles i:nth-child(6){left:61%;top:4%;--fly-x:10px;--fly-y:-22px;animation-delay:3s;font-size:7px}
+.sparkle-button:hover{box-shadow:0 0 22px rgba(218,190,124,.22)}
+@keyframes flyingGoldSpark{0%,12%{transform:translate3d(0,8px,0) scale(.45) rotate(0deg);opacity:0}28%{opacity:.9}72%{opacity:.65}100%{transform:translate3d(var(--fly-x),var(--fly-y),0) scale(.15) rotate(100deg);opacity:0}}
+@keyframes buttonGoldShimmer{0%,68%{background-position:100% 0;opacity:0}76%{opacity:.8}100%{background-position:0 0;opacity:0}}
+@media(prefers-reduced-motion:reduce){.sparkle-button::before,.sparkle-particles i{animation:none!important}}
+
 </style>
 <script>
 (function(){
