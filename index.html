@@ -363,4 +363,48 @@ body.wishes-modal-open{overflow:hidden}
 })();
 </script>
 
-</body></html>
+
+<style>
+/* Peningkatan keterbacaan teks tanpa mengubah hierarki desain. */
+@media (min-width: 521px) {
+  .body-copy, .story-copy > p:not(.eyebrow):not(.script) {
+    font-size: 1.08rem; line-height: 1.9;
+  }
+  .rsvp-form label, .wishes-input-label {
+    font-size: 1rem; line-height: 1.65;
+  }
+  .rsvp-form input, .rsvp-form select,
+  .wishes-input-label input, .wishes-input-label textarea {
+    font-size: 1rem; line-height: 1.6;
+  }
+  .wishes-modal-panel .body-copy, .popup-gift-accounts .account-owner {
+    font-size: 1rem; line-height: 1.8;
+  }
+  .popup-gift-accounts .account-number { font-size: 1.22rem; }
+  .guest-wishes-footer .wishes-list { font-size: 1rem; line-height: 1.8; }
+}
+@media (max-width: 520px) {
+  .body-copy, .story-copy > p:not(.eyebrow):not(.script) {
+    font-size: 1rem; line-height: 1.85;
+  }
+  .event-date, .venue, .event-card .muted {
+    font-size: 1rem; line-height: 1.7;
+  }
+  .rsvp-form label, .wishes-input-label {
+    font-size: .96rem; line-height: 1.65;
+  }
+  .rsvp-form input, .rsvp-form select,
+  .wishes-input-label input, .wishes-input-label textarea {
+    font-size: 1rem; line-height: 1.55;
+  }
+  .wishes-modal-panel .body-copy, .popup-gift-accounts .account-owner {
+    font-size: .96rem; line-height: 1.75;
+  }
+  .guest-wishes-footer .wishes-list { font-size: .96rem; line-height: 1.75; }
+}
+/* Informasi pendukung tidak dibiarkan terlalu kecil. */
+.tiny, .muted, .form-status, .placeholder-note {
+  font-size: max(0.9rem, 1em); line-height: 1.7;
+}
+</style>
+\n</body></html>
