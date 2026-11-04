@@ -65,7 +65,7 @@ rsvpForm.addEventListener("submit", async e => {
     status.textContent = result.message || "RSVP berhasil disimpan. Terima kasih!";
     form.reset();
   } catch (err) {
-    status.textContent = "RSVP belum dapat dipastikan tersimpan. Periksa tab RSVP di spreadsheet sebelum mencoba lagi untuk menghindari data ganda. Detail: " + err.message;
+    status.textContent = err.message;
   }
 });
 })();
