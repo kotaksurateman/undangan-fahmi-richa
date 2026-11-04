@@ -282,6 +282,7 @@ body.wishes-modal-open{overflow:hidden}
   });
 })();
 </script>
+\n
 <style>
 .love-spark-overlay{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;background:rgba(9,8,7,.68);backdrop-filter:blur(7px);opacity:0;visibility:hidden;transition:opacity .55s ease,visibility .55s ease;padding:20px}
 .love-spark-overlay.is-active{opacity:1;visibility:visible}
@@ -404,6 +405,21 @@ body.wishes-modal-open{overflow:hidden}
 /* Informasi pendukung tidak dibiarkan terlalu kecil. */
 .tiny, .muted, .form-status, .placeholder-note {
   font-size: max(0.9rem, 1em); line-height: 1.7;
+}
+</style>
+
+
+<style>
+/* Penyesuaian tipografi informasi hadiah: nomor rekening tidak bold, nama bank lebih kecil. */
+.popup-gift-accounts .gift-box h3 {
+  font-size: .92rem !important;
+  font-weight: 500 !important;
+  letter-spacing: .08em;
+}
+.popup-gift-accounts .account-number {
+  font-weight: 400 !important;
+  font-size: 1.15rem;
+  letter-spacing: .06em;
 }
 </style>
 
